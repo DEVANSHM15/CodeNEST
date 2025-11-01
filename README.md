@@ -16,7 +16,6 @@ A full-stack web application for tracking coding projects with user authenticati
 - Mongoose
 - JWT Authentication
 - bcryptjs
-
 ## 📁 Project Structure
 ```
 project-tracker-fullstack/
