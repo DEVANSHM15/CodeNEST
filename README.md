@@ -78,20 +78,12 @@ Frontend runs on: `http://localhost:3000`
 - ✅ RESTful API Architecture
 
 ## 🎨 Screenshots
-
-[Add screenshots here]
+![alt text](image-2.png)
+![alt text](image-1.png)
 
 ## 👨‍💻 Author
 
-Your Name - [Your GitHub Profile]
-
-## 📄 License
-
-This project is open source and available under the MIT License.
-```
-
-### **Step 4: Create Root `.gitignore`**
-```
+Your Name - Devansh Mehrotra
 # Dependencies
 node_modules/
 package-lock.json
