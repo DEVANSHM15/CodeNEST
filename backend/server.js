@@ -29,7 +29,7 @@ mongoose.connect(MONGODB_URI)
     console.error('❌ MongoDB connection error:', err.message);
     console.log('💡 Make sure MongoDB is running or use MongoDB Atlas');
   });
-
+  
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
