@@ -237,7 +237,7 @@ export default function ProjectTracker() {
                 <Code2 size={32} className="text-white transform -rotate-6" />
               </div>
               <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-200 via-pink-200 to-purple-200 bg-clip-text text-transparent mb-2">
-                Project Tracker
+                DevTracker
               </h1>
               <p className="text-purple-200/80">Your creative workspace awaits</p>
             </div>
@@ -355,7 +355,7 @@ export default function ProjectTracker() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent">
-                  Project Tracker
+                DevTracker  
                 </h1>
                 <p className="text-sm text-purple-300">Hey, {user.name}! 👋</p>
               </div>
