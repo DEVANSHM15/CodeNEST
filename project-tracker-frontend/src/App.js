@@ -60,9 +60,12 @@ const api = {
       },
       body: JSON.stringify(project)
     });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Failed to update project');
-    return data;
+    if (!res.ok) {
+      const data = await res.json();
+      console.error('Update error response:', data);
+      throw new Error(data.error || 'Failed to update project');
+    }
+    return await res.json();
   },
 
   async deleteProject(token, id) {
@@ -109,6 +112,7 @@ export default function ProjectTracker() {
     try {
       setLoading(true);
       const data = await api.getProjects(token);
+      console.log('Loaded projects:', data); // Debug log to check IDs
       setProjects(data);
     } catch (err) {
       setError(err.message);
@@ -163,12 +167,19 @@ export default function ProjectTracker() {
     try {
       setLoading(true);
       const projectData = {
-        ...formData,
+        title: formData.title,
+        description: formData.description,
+        githubLink: formData.githubLink,
         techStack: formData.techStack.split(',').map(t => t.trim()).filter(Boolean)
       };
 
       if (editingProject) {
-        await api.updateProject(token, editingProject.id, projectData);
+        const projectId = editingProject._id || editingProject.id;
+        console.log('Updating project with ID:', projectId); // Debug log
+        if (!projectId) {
+          throw new Error('Project ID is missing');
+        }
+        await api.updateProject(token, projectId, projectData);
       } else {
         await api.createProject(token, projectData);
       }
@@ -179,6 +190,8 @@ export default function ProjectTracker() {
       setFormData({ title: '', description: '', githubLink: '', techStack: '' });
     } catch (err) {
       setError(err.message);
+      console.error('Submit error:', err);
+      console.error('Editing project:', editingProject); // Debug log
     } finally {
       setLoading(false);
     }
@@ -190,7 +203,7 @@ export default function ProjectTracker() {
       title: project.title,
       description: project.description,
       githubLink: project.githubLink || '',
-      techStack: project.techStack.join(', ')
+      techStack: Array.isArray(project.techStack) ? project.techStack.join(', ') : ''
     });
     setShowModal(true);
   };
@@ -237,7 +250,7 @@ export default function ProjectTracker() {
                 <Code2 size={32} className="text-white transform -rotate-6" />
               </div>
               <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-200 via-pink-200 to-purple-200 bg-clip-text text-transparent mb-2">
-                DevTracker
+                Project Tracker
               </h1>
               <p className="text-purple-200/80">Your creative workspace awaits</p>
             </div>
@@ -355,7 +368,7 @@ export default function ProjectTracker() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent">
-                DevTracker  
+                  Project Tracker
                 </h1>
                 <p className="text-sm text-purple-300">Hey, {user.name}! 👋</p>
               </div>
