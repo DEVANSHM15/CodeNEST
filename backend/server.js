@@ -29,7 +29,7 @@ mongoose.connect(MONGODB_URI)
     console.error('❌ MongoDB connection error:', err.message);
     console.log('💡 Make sure MongoDB is running or use MongoDB Atlas');
   });
-  
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -295,6 +295,7 @@ app.put('/api/projects/:id', authenticateToken, async (req, res) => {
   try {
     const { title, description, githubLink, techStack } = req.body;
 
+    // Find the project
     const project = await Project.findOne({
       _id: req.params.id,
       userId: req.user.id
@@ -304,18 +305,22 @@ app.put('/api/projects/:id', authenticateToken, async (req, res) => {
       return res.status(404).json({ error: 'Project not found' });
     }
 
-    // Update fields
-    if (title) project.title = title;
-    if (description) project.description = description;
+    // Update fields if provided
+    if (title !== undefined) project.title = title;
+    if (description !== undefined) project.description = description;
     if (githubLink !== undefined) project.githubLink = githubLink;
-    if (techStack) project.techStack = Array.isArray(techStack) ? techStack : [techStack];
+    if (techStack !== undefined) {
+      project.techStack = Array.isArray(techStack) ? techStack : [techStack];
+    }
     project.updatedAt = Date.now();
 
     await project.save();
+    
+    console.log('Project updated successfully:', project._id);
     res.json(project);
   } catch (err) {
     console.error('Update project error:', err);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: 'Server error: ' + err.message });
   }
 });
 
