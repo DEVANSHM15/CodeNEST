@@ -76,6 +76,21 @@ Frontend runs on: `http://localhost:3000`
 - ✅ Responsive Design
 - ✅ MongoDB Database Integration
 - ✅ RESTful API Architecture
+## UML Diagrams
+1. Class diagram
+![alt text](Class_diag.png)
+
+2. Sequence Diagram
+![alt text](Sequence_Diag.png)
+
+3. Use Case Diagram
+![alt text](Use_case_Diag.png)
+
+4. Activity Diagram
+![alt text](Activity_Diag.png)
+
+5. Schema diagram
+![alt text](Schema_diag.png)
 
 ## 🎨 Screenshots
 ![alt text](image-2.png)
